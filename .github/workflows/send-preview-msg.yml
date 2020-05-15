@@ -20,3 +20,4 @@ jobs:
           Your Render PR Server's URL is <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh>
           You can see the commit-id of the site at <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh/commit-id.txt>
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-repeats: true
