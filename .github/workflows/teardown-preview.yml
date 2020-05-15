@@ -12,9 +12,15 @@ jobs:
     - name: Get Pull-Request ID
       id: get-pr-id
       uses: kkak10/pr-number-action@v1.3
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: Setup Surge
+      run: npm i surge -g
+
     - name: Teardown PR Preview
       run: surge teardown https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
-        
     - name: Send Message
       if: success()
       uses: mshick/add-pr-comment@v1
