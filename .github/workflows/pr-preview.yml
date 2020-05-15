@@ -12,7 +12,14 @@ jobs:
     - name: Get Pull-Request ID
       id: get-pr-id
       uses: kkak10/pr-number-action@v1.3
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: Setup Surge
+      run: npm i surge -g
 #----------
+    
     - run: npm i
     - run: npm i hexo-cli -g
     - run: hexo g
@@ -24,10 +31,8 @@ jobs:
         mkdir public
         echo "<!DOCTYPE html><html><head><title>Oops</title></head><body>page build faile</body></html>" >> public/index.html
     - name: Add Commit ID
-      run: echo "${{ github.sha }}" >> public/commit-id.txt
-    - name: Publish To Surge
-      uses: yg/deploy-surge@v1.0.1
-      with:
-        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-        DOMAIN_NAME: https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh
-        BUILD_DIRECTORY: public
+      if: "true"
+      run: git rev-parse HEAD >> public/commit-id.txt
+    - name: Publish PR Preview
+      if: "true"
+      run: surge ./public https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}

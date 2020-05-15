@@ -12,16 +12,20 @@ jobs:
     - name: Get Pull-Request ID
       id: get-pr-id
       uses: kkak10/pr-number-action@v1.3
-    - name: Teardown PR Preview
-      uses: nelonoel/surge-sh-teardown@v1.0.4
+    - name: Setup Node
+      uses: actions/setup-node@v1
       with:
-        template: "https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh"
-        login: ${{ secrets.SURGE_LOGIN }}
-        token: ${{ secrets.SURGE_TOKEN }}
-        
+        node-version: '10.x'
+    - name: Setup Surge
+      run: npm i surge -g
+
+    - name: Teardown PR Preview
+      run: surge teardown https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
     - name: Send Message
       if: success()
-      uses: github-actions-up-and-running/pr-comment@v1.0.0
+      uses: mshick/add-pr-comment@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: PR Preview Server has been deleted successfully
+        message: |
+          Your Render PR Server has been deleted successfully
+        allow-repeats: true
