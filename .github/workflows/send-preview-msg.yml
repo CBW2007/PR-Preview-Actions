@@ -14,7 +14,9 @@ jobs:
       uses: kkak10/pr-number-action@v1.3
     
     - name: Send Message
-      uses: github-actions-up-and-running/pr-comment@v1.0.0
+      uses: mshick/add-pr-comment@v1
       with:
+        message: |
+          Your Render PR Server's URL is <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh>
+          You can see the commit-id of the site at <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh/commit-id.txt>
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: You Render PR Server's URL is <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh> <br /> You can see the commit-id of the site at <https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh/commit-id.txt>
