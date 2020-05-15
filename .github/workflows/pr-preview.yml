@@ -30,10 +30,6 @@ jobs:
     - name: Add Commit ID
       if: "true"
       run: echo "${{ github.sha }}" >> public/commit-id.txt
-    - name: Publish To Surge
+    - name: Publish PR Preview
       if: "true"
-      uses: yg/deploy-surge@v1.0.1
-      with:
-        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-        DOMAIN_NAME: https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh
-        BUILD_DIRECTORY: public
+      run: surge ./public https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
