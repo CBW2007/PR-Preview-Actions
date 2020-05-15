@@ -27,4 +27,5 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: |
-          PR Preview Server has been deleted successfully
+          Your Render PR Server has been deleted successfully
+        allow-repeats: true
