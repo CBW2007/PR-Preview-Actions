@@ -32,7 +32,7 @@ jobs:
         echo "<!DOCTYPE html><html><head><title>Oops</title></head><body>page build faile</body></html>" >> public/index.html
     - name: Add Commit ID
       if: "true"
-      run: git rev-parse HEAD >> public/commit-id.txt
+      run: echo "${{ github.event.pull_request.head.sha }}" >> public/commit-id.txt
     - name: Publish PR Preview
       if: "true"
       run: surge ./public https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
