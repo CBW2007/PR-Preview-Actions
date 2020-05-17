@@ -21,8 +21,7 @@ jobs:
 #----------    
     - run: npm i
     - run: npm i hexo-cli -g
-#    - run: hexo g
-    - run: echo xxx >> ahndsiuo/andio.txt
+    - run: hexo g
 #----------
     - name: If Fail
       if: failure()
