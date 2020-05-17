@@ -18,8 +18,7 @@ jobs:
         node-version: '10.x'
     - name: Setup Surge
       run: npm i surge -g
-#----------
-    
+#----------    
     - run: npm i
     - run: npm i hexo-cli -g
     - run: hexo g
@@ -29,10 +28,10 @@ jobs:
       run: |
         hexo clean
         mkdir public
-        echo "<!DOCTYPE html><html><head><title>Oops</title></head><body>page build faile</body></html>" >> public/index.html
+        echo "<!DOCTYPE html><html><head><title>Oops</title></head><body>page build failed</body></html>" >> public/index.html
     - name: Add Commit ID
-      if: "true"
+      if: always()
       run: echo "${{ github.event.pull_request.head.sha }}" >> public/commit-id.txt
     - name: Publish PR Preview
-      if: "true"
+      if: always()
       run: surge ./public https://pr-preview-actions-${{ steps.get-pr-id.outputs.pr }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
