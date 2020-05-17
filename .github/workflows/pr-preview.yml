@@ -18,9 +18,8 @@ jobs:
         node-version: '10.x'
     - name: Setup Surge
       run: npm i surge -g
-#----------
-    
-#    - run: npm i
+#----------    
+    - run: npm i
     - run: npm i hexo-cli -g
     - run: hexo g
 #----------
